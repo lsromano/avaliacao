@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contract details</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <style>
+        img {
+            width: 100%;
+        }
+
+        .card-header {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .card-title {
+            margin-bottom: 0;
+        }
+
+        .attachment-link {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-row {
+            display: flex;
+            align-items: baseline;
+        }
+
+        .form-row label {
+            flex: 0 0 30%;
+            margin-bottom: 0;
+        }
+
+        .form-row .form-control {
+            flex: 0 0 70%;
+            margin-top: 10px;
+        }
+
+        .btn-update {
+            background-color: #dc3545;
+            border-color: #dc3545;
+            margin-left: auto;
+            display: block;
+            color: #fff;
+            font-weight: bold;
+            padding: 0.375rem 0.75rem;
+        }
+
+        .btn-update:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+        }
+
+        .btn-back {
+            background-color: #6c757d;
+            border-color: #6c757d;
+            display: block;
+            margin-right: auto;
+            color: #fff;
+            font-weight: bold;
+            padding: 0.375rem 0.75rem;
+        }
+
+        .btn-back:hover {
+            background-color: #5a6268;
+            border-color: #545b62;
+        }
+    </style>
+</head>
+<body>
+<section class="testimonial py-5" id="testimonial">
+    <div class="container">
+
+
+        <div class="row">
+            <div class="col-md-12 py-5 border">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">Contract details</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="{% url 'contratos:contract_update' contrato_id=contrato.id %}">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="attachment">Attachment:</label>
+                            {% if contrato.attachment %}
+                                <a href="{% url 'contratos:download_attachment' contrato_id=contrato.id %}" class="attachment-link">{{ contrato.attachment.name }}</a>
+                            {% else %}
+                                <p>No attachment</p>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-row">
+                            <label for="contract-title">Contract Title:</label>
+                            <input id="contract-title" name="contract_title" class="form-control" type="text" value="{{ contrato.contract_title }}">
+                        </div>
+
+                        <div class="form-row">
+                            <label for="involved-parties">Involved Parties:</label>
+                            <input id="involved-parties" name="involved_parties" class="form-control" type="text" value="{{ contrato.involved_parties }}">
+                        </div>
+
+                        <div class="form-row">
+                            <label for="validity-start-date">Validity Start Date:</label>
+                            <input id="validity-start-date" name="validity_start_date" class="form-control" type="date" value="{{ contrato.validity_start_date|date:'Y-m-d' }}">
+                        </div>
+
+                        <div class="form-row">
+                            <label for="validity-end-date">Validity End Date:</label>
+                            <input id="validity-end-date" name="validity_end_date" class="form-control" type="date" value="{{ contrato.validity_end_date|date:'Y-m-d' }}">
+                        </div>
+
+                        <div class="form-row">
+                            <label for="specific-clauses">Specific Clauses:</label>
+                            <textarea id="specific-clauses" name="specific_clauses" class="form-control" rows="3">{{ contrato.specific_clauses }}</textarea>
+                        </div>
+
+                        <div class="form-row">
+                            <label for="description">Description:</label>
+                            <textarea id="description" name="description" class="form-control" rows="3">{{ contrato.description }}</textarea>
+                        </div>
+
+                        <div class="form-row">
+                            <label for="status">Status:</label>
+                            <select id="status" name="status" class="form-control">
+                                <option value="Active" {% if contrato.status == 'Active' %}selected{% endif %}>Active</option>
+                                <option value="Inactive" {% if contrato.status == 'Inactive' %}selected{% endif %}>Inactive</option>
+                            </select>
+                        </div>
+
+                        <div class="form-row" style="margin-top: 10px;">
+                            <a href="{% url 'contratos:contract_list' %}" class="btn btn-back">Back to Contract List</a>
+                            <a href="{{ historical_changes_url }}" class="btn btn-primary">View Historical Changes</a>
+                            <button type="submit" class="btn btn-update">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

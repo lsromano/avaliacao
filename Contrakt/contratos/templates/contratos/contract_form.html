@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Contract</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+
+    <style>
+        img {
+            width: 100%;
+        }
+
+        .error-message {
+            color: red;
+        }
+
+
+
+    </style>
+
+    <script>
+        $(document).ready(function() {
+            $('#contract-form').submit(function(event) {
+                event.preventDefault();
+
+                // limpa  msg de erro
+                $('.error-message').remove();
+
+                // validar
+                var isValid = true;
+
+                // checar o pdf
+                if ($('#attachment').val() === '') {
+                    $('#attachment').after('<p class="error-message">Please select an attachment.</p>');
+                    isValid = false;
+                }
+
+
+                if ($('#contract-title').val() === '') {
+                    $('#contract-title').after('<p class="error-message">Please enter the contract title.</p>');
+                    isValid = false;
+                }
+
+
+                if ($('#involved-parties').val() === '') {
+                    $('#involved-parties').after('<p class="error-message">Please enter the involved parties.</p>');
+                    isValid = false;
+                }
+
+
+                if ($('#validity-start-date').val() === '') {
+                    $('#validity-start-date').after('<p class="error-message">Please enter the validity start date.</p>');
+                    isValid = false;
+                }
+
+
+                if ($('#validity-end-date').val() === '') {
+                    $('#validity-end-date').after('<p class="error-message">Please enter the validity end date.</p>');
+                    isValid = false;
+                }
+
+
+                if ($('#specific-clauses').val() === '') {
+                    $('#specific-clauses').after('<p class="error-message">Please enter the specific clauses.</p>');
+                    isValid = false;
+                }
+
+
+                if ($('#description').val() === '') {
+                    $('#description').after('<p class="error-message">Please enter the description.</p>');
+                    isValid = false;
+                }
+
+                if (isValid) {
+                    // Submit the form if all fields are valid
+                    this.submit();
+                }
+            });
+        });
+
+
+
+    </script>
+
+</head>
+<body>
+<section class="testimonial py-5" id="page1">
+    <div class="container">
+        <div class="row ">
+            <div class="col-md-4 py-5 bg-primary text-white text-center">
+                <div class="card-body">
+                    <img src="http://www.ansonika.com/mavia/img/registration_bg.svg" style="width:30%">
+                    <h2 class="py-3">Create Contract</h2>
+                    <p>Thank you for choosing our contract management system. Please fill out the form below to create a
+                        new contract. Your information will help us organize and monitor your contracts effectively.</p>
+                </div>
+            </div>
+            <div class="col-md-8 py-5 border">
+                <h4 class="pb-4">Please provide the following information</h4>
+                <form id="contract-form" method="post" enctype="multipart/form-data"
+                      action="{% url 'contratos:contract_form' %}">
+
+                    {% csrf_token %}
+
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="attachment">Attachment:</label>
+                            <input id="attachment" name="attachment" class="form-control-file" type="file">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="contract-title">Contract Title:</label>
+                            <input id="contract-title" name="contract_title" class="form-control" type="text">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="involved-parties">Involved Parties:</label>
+                            <input id="involved-parties" name="involved_parties" class="form-control" type="text">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="validity-start-date">Validity Start Date:</label>
+                            <input id="validity-start-date" name="validity_start_date" class="form-control" type="date">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="validity-end-date">Validity End Date:</label>
+                            <input id="validity-end-date" name="validity_end_date" class="form-control" type="date">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="specific-clauses">Specific Clauses:</label>
+                            <textarea id="specific-clauses" name="specific_clauses" class="form-control"
+                                      rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="description">Description:</label>
+                            <textarea id="description" name="description" class="form-control" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-row justify-content-between">
+                        <a href="http://127.0.0.1:8000/contratos/" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Create Contract</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

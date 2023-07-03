@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Historical Changes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+
+        h4 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .change-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .change-item p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .no-changes {
+            color: #999;
+            font-style: italic;
+        }
+
+        .back-button {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>   <!-- renderiza o histórico de alterações de um contrato -->
+    <div class="container">
+        <h4>Historical Changes:</h4>
+        {% if contrato.historicoalteracoes_set.all %}
+            {% for alteracao in contrato.historicoalteracoes_set.all %}
+                <div class="change-item">
+                    <p>{{ alteracao.data_alteracao }} - {{ alteracao.usuario.username }}: {{ alteracao.alteracoes }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="no-changes">No historical changes.</p>
+        {% endif %}
+        <a href="{% url 'contratos:contract_information' contrato.id %}" class="back-button">Back to Contract</a>
+    </div>
+</body>
+</html>
